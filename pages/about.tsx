@@ -1,6 +1,14 @@
+import TranslationContext from "@/contexts/TranslationContext";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 
 const About = () => {
+  const { locale } = useRouter();
+  const translations = useContext(TranslationContext);
+  if (!translations) throw new Error("TranslationContext not found");
+
+  const t = (key: String) => translations[locale][key];
   return (
     <>
       <Head>

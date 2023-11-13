@@ -1,6 +1,17 @@
+import TranslationContext from "@/contexts/TranslationContext";
+import { useTranslation } from "@/hooks/useTranslation";
+import LanguageSwitcher from "@/utils/languageSwitcher";
 import Link from "next/link";
 
 const Header = () => {
+  const [translationContext, error] = useTranslation();
+  if (error) {
+    // Handle the error appropriately
+    console.error("Translation context error:", error.message);
+    return <div>Error loading translations</div>;
+  }
+  const { t, locale } = translationContext;
+
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="logo">
@@ -13,13 +24,16 @@ const Header = () => {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/services">Services</Link>
+            <Link href="/services">{t("services_title")}</Link>
           </li>
           <li>
-            <Link href="/about">About Us</Link>
+            <Link href="/about">{t("about_title")}</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link href="/contact">{t("contact_title")}</Link>
+          </li>
+          <li>
+            <LanguageSwitcher />
           </li>
         </ul>
       </nav>
